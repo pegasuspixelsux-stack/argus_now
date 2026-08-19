@@ -39,10 +39,14 @@ export function Hero() {
 
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
 
+      {/* This overlay content sits on a fixed dark photo + black gradient
+          (not the page's own background), so its text stays a fixed cream
+          tone rather than following text-foreground — the light theme
+          flips that token to near-black, which would be unreadable here. */}
       <div className="absolute bottom-0 left-0 right-0 px-4 pb-10 sm:px-6 md:px-10 md:pb-16">
         <div className="grid grid-cols-12 items-end gap-6">
           <div className="col-span-12 lg:col-span-8">
-            <h1 className="font-serif font-medium leading-[1.05] tracking-[-0.02em] text-foreground text-[9vw] sm:text-[7vw] md:text-[5vw] lg:text-[3.6vw]">
+            <h1 className="font-serif font-medium leading-[1.05] tracking-[-0.02em] text-[#e1e0cc] text-[9vw] sm:text-[7vw] md:text-[5vw] lg:text-[3.6vw]">
               <WordsPullUp text="No busques entre cientos de avisos. Encontrá el activo correcto." />
             </h1>
           </div>
@@ -52,7 +56,7 @@ export function Hero() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-sm text-foreground/70 sm:text-base"
+              className="text-sm text-[#e1e0cc]/70 sm:text-base"
               style={{ lineHeight: 1.4 }}
             >
               En un mercado complejo como Punta del Este, la verdadera exclusividad no
