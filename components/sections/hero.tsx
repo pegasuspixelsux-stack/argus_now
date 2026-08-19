@@ -47,7 +47,7 @@ export function Hero() {
         <div className="grid grid-cols-12 items-end gap-6">
           <div className="col-span-12 lg:col-span-8">
             <h1 className="font-serif font-medium leading-[1.05] tracking-[-0.02em] text-[#e1e0cc] text-[9vw] sm:text-[7vw] md:text-[5vw] lg:text-[3.6vw]">
-              <WordsPullUp text="No busques entre cientos de avisos. Encontrá el activo correcto." />
+              <WordsPullUp text="No busques entre cientos de avisos. Encontrá la propiedad correcta." />
             </h1>
           </div>
 
