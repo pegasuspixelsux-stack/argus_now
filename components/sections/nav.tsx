@@ -1,5 +1,3 @@
-const navItems = ["Nuestra historia", "Curaduría", "Programas", "Contacto"];
-
 export function Nav() {
   return (
     <nav className="fixed left-1/2 top-0 z-50 -translate-x-1/2">
@@ -7,17 +5,6 @@ export function Nav() {
         <span className="font-serif text-lg tracking-tight text-foreground sm:text-xl">
           Argus
         </span>
-        <div className="hidden items-center gap-6 md:flex">
-          {navItems.map((item) => (
-            <a
-              key={item}
-              href="#contacto"
-              className="text-xs text-foreground/70 transition-colors hover:text-foreground sm:text-sm"
-            >
-              {item}
-            </a>
-          ))}
-        </div>
         <a
           href="#contacto"
           className="rounded-full bg-primary px-4 py-1.5 text-xs font-medium text-primary-foreground transition-transform hover:scale-105 sm:text-sm"

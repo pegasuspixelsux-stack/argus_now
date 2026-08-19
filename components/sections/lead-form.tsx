@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -45,6 +45,14 @@ export function LeadForm() {
     defaultValues: emptyDefaults,
   });
 
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (status === "success") {
+      sectionRef.current?.scrollIntoView({ block: "center" });
+    }
+  }, [status]);
+
   async function onSubmit(values: LeadFormValues) {
     setStatus("submitting");
     setServerError(null);
@@ -59,7 +67,12 @@ export function LeadForm() {
 
   if (status === "success") {
     return (
-      <section id="contacto" className="bg-background px-4 py-24 sm:px-6 md:px-10">
+      <section
+        id="contacto"
+        ref={sectionRef}
+        aria-live="polite"
+        className="bg-background px-4 py-24 sm:px-6 md:px-10"
+      >
         <div className="mx-auto max-w-xl text-center">
           <h2 className="font-serif text-3xl text-foreground">
             ¡Listo! Te contactaremos pronto.
@@ -74,7 +87,7 @@ export function LeadForm() {
   }
 
   return (
-    <section id="contacto" className="bg-background px-4 py-24 sm:px-6 md:px-10">
+    <section id="contacto" ref={sectionRef} className="bg-background px-4 py-24 sm:px-6 md:px-10">
       <div className="mx-auto max-w-xl">
         <h2 className="font-serif text-3xl text-foreground sm:text-4xl">
           Recibí tu listado curado a medida
@@ -86,13 +99,16 @@ export function LeadForm() {
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="mt-10 flex flex-col gap-8">
           <div className="flex flex-col gap-3">
-            <Label>Operación</Label>
+            <Label id="operacion-label">Operación</Label>
             <RadioGroup
               onValueChange={(value) =>
                 form.setValue("operacion", value as LeadFormValues["operacion"], {
                   shouldValidate: true,
                 })
               }
+              aria-labelledby="operacion-label"
+              aria-describedby={form.formState.errors.operacion ? "operacion-error" : undefined}
+              aria-invalid={!!form.formState.errors.operacion}
               className="flex flex-col gap-2 sm:flex-row sm:gap-6"
             >
               {operacionOptions.map((option, index) => (
@@ -105,7 +121,9 @@ export function LeadForm() {
               ))}
             </RadioGroup>
             {form.formState.errors.operacion && (
-              <p className="text-sm text-destructive">Seleccioná una opción.</p>
+              <p id="operacion-error" className="text-sm text-destructive">
+                Seleccioná una opción.
+              </p>
             )}
           </div>
 
@@ -118,7 +136,12 @@ export function LeadForm() {
                 })
               }
             >
-              <SelectTrigger id="tipoActivo" className="w-full">
+              <SelectTrigger
+                id="tipoActivo"
+                aria-describedby={form.formState.errors.tipoActivo ? "tipoActivo-error" : undefined}
+                aria-invalid={!!form.formState.errors.tipoActivo}
+                className="h-11 w-full md:h-9"
+              >
                 <SelectValue placeholder="Elegí un tipo de activo" />
               </SelectTrigger>
               <SelectContent>
@@ -130,7 +153,9 @@ export function LeadForm() {
               </SelectContent>
             </Select>
             {form.formState.errors.tipoActivo && (
-              <p className="text-sm text-destructive">Seleccioná un tipo de activo.</p>
+              <p id="tipoActivo-error" className="text-sm text-destructive">
+                Seleccioná un tipo de activo.
+              </p>
             )}
           </div>
 
@@ -143,7 +168,12 @@ export function LeadForm() {
                 })
               }
             >
-              <SelectTrigger id="presupuesto" className="w-full">
+              <SelectTrigger
+                id="presupuesto"
+                aria-describedby={form.formState.errors.presupuesto ? "presupuesto-error" : undefined}
+                aria-invalid={!!form.formState.errors.presupuesto}
+                className="h-11 w-full md:h-9"
+              >
                 <SelectValue placeholder="Elegí un rango" />
               </SelectTrigger>
               <SelectContent>
@@ -155,39 +185,71 @@ export function LeadForm() {
               </SelectContent>
             </Select>
             {form.formState.errors.presupuesto && (
-              <p className="text-sm text-destructive">Seleccioná un rango de presupuesto.</p>
+              <p id="presupuesto-error" className="text-sm text-destructive">
+                Seleccioná un rango de presupuesto.
+              </p>
             )}
           </div>
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="nombre">Nombre</Label>
-            <Input id="nombre" {...form.register("nombre")} placeholder="Tu nombre completo" />
+            <Input
+              id="nombre"
+              {...form.register("nombre")}
+              placeholder="Tu nombre completo"
+              aria-describedby={form.formState.errors.nombre ? "nombre-error" : undefined}
+              aria-invalid={!!form.formState.errors.nombre}
+              className="h-11 md:h-9"
+            />
             {form.formState.errors.nombre && (
-              <p className="text-sm text-destructive">{form.formState.errors.nombre.message}</p>
+              <p id="nombre-error" className="text-sm text-destructive">
+                {form.formState.errors.nombre.message}
+              </p>
             )}
           </div>
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="telefono">Teléfono / WhatsApp</Label>
-            <Input id="telefono" {...form.register("telefono")} placeholder="+598 99 000 000" />
+            <Input
+              id="telefono"
+              {...form.register("telefono")}
+              placeholder="+598 99 000 000"
+              aria-describedby={form.formState.errors.telefono ? "telefono-error" : undefined}
+              aria-invalid={!!form.formState.errors.telefono}
+              className="h-11 md:h-9"
+            />
             {form.formState.errors.telefono && (
-              <p className="text-sm text-destructive">{form.formState.errors.telefono.message}</p>
+              <p id="telefono-error" className="text-sm text-destructive">
+                {form.formState.errors.telefono.message}
+              </p>
             )}
           </div>
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="email">Correo electrónico</Label>
-            <Input id="email" type="email" {...form.register("email")} placeholder="tu@correo.com" />
+            <Input
+              id="email"
+              type="email"
+              {...form.register("email")}
+              placeholder="tu@correo.com"
+              aria-describedby={form.formState.errors.email ? "email-error" : undefined}
+              aria-invalid={!!form.formState.errors.email}
+              className="h-11 md:h-9"
+            />
             {form.formState.errors.email && (
-              <p className="text-sm text-destructive">{form.formState.errors.email.message}</p>
+              <p id="email-error" className="text-sm text-destructive">
+                {form.formState.errors.email.message}
+              </p>
             )}
           </div>
 
           {status === "error" && serverError && (
-            <p className="text-sm text-destructive">{serverError}</p>
+            <p aria-live="polite" className="text-sm text-destructive">
+              {serverError}
+            </p>
           )}
 
-          <Button type="submit" disabled={status === "submitting"} className="w-full">
+          <Button type="submit" disabled={status === "submitting"} size="lg" className="h-11 w-full">
             {status === "submitting" ? "Enviando..." : "Generar mi selección privada"}
           </Button>
         </form>
