@@ -140,7 +140,7 @@ export function LeadForm() {
                 id="tipoActivo"
                 aria-describedby={form.formState.errors.tipoActivo ? "tipoActivo-error" : undefined}
                 aria-invalid={!!form.formState.errors.tipoActivo}
-                className="h-11 w-full md:h-9"
+                className="data-[size=default]:h-11 w-full md:data-[size=default]:h-9"
               >
                 <SelectValue placeholder="Elegí un tipo de activo" />
               </SelectTrigger>
@@ -172,7 +172,7 @@ export function LeadForm() {
                 id="presupuesto"
                 aria-describedby={form.formState.errors.presupuesto ? "presupuesto-error" : undefined}
                 aria-invalid={!!form.formState.errors.presupuesto}
-                className="h-11 w-full md:h-9"
+                className="data-[size=default]:h-11 w-full md:data-[size=default]:h-9"
               >
                 <SelectValue placeholder="Elegí un rango" />
               </SelectTrigger>
