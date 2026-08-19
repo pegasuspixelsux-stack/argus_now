@@ -2,11 +2,15 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import { WordsPullUp } from "@/components/ui/words-pull-up";
 
-// TODO: set a hosted video URL to enable the video background (e.g. the same
-// CDN pattern used by the original PrismaHero reference component).
+// TODO: set a hosted video URL to switch the background to video (e.g. the
+// same CDN pattern used by the original PrismaHero reference component).
+// Takes priority over HERO_IMAGE_SRC when set.
 const HERO_VIDEO_SRC = "";
+
+const HERO_IMAGE_SRC = "/images/hero/apartamento-playa-brava.jpg";
 
 export function Hero() {
   return (
@@ -19,6 +23,15 @@ export function Hero() {
           playsInline
           className="absolute inset-0 h-full w-full object-cover"
           src={HERO_VIDEO_SRC}
+        />
+      ) : HERO_IMAGE_SRC ? (
+        <Image
+          src={HERO_IMAGE_SRC}
+          alt="Apartamento frente a la Playa Brava, Punta del Este"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
       ) : (
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#1a1a1a,transparent_60%),linear-gradient(to_bottom,#0a0a0a,#050505)]" />
