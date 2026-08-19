@@ -360,7 +360,7 @@ git commit -m "Add Argus constants and lead form schema"
 - Create: `components/ui/words-pull-up.tsx`
 
 **Interfaces:**
-- Produces: `WordsPullUp({ text, className?, showAsterisk?, style? })` and `WordsPullUpMultiStyle({ segments, className?, style? })`, both client components — consumed by Task 6 (hero), Task 7 (showcase), Task 8 (value props).
+- Produces: `WordsPullUp({ text, className?, showAsterisk?, style? })`, a client component — consumed by Task 6 (hero), Task 7 (showcase), Task 8 (value props).
 
 - [ ] **Step 1: Write `components/ui/words-pull-up.tsx`**
 
@@ -407,50 +407,6 @@ export function WordsPullUp({
           </motion.span>
         );
       })}
-    </div>
-  );
-}
-
-interface Segment {
-  text: string;
-  className?: string;
-}
-
-interface WordsPullUpMultiStyleProps {
-  segments: Segment[];
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-export function WordsPullUpMultiStyle({
-  segments,
-  className = "",
-  style,
-}: WordsPullUpMultiStyleProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
-
-  const words: { word: string; className?: string }[] = [];
-  segments.forEach((seg) => {
-    seg.text.split(" ").forEach((w) => {
-      if (w) words.push({ word: w, className: seg.className });
-    });
-  });
-
-  return (
-    <div ref={ref} className={`inline-flex flex-wrap justify-center ${className}`} style={style}>
-      {words.map((w, i) => (
-        <motion.span
-          key={i}
-          initial={{ y: 20, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className={`inline-block ${w.className ?? ""}`}
-          style={{ marginRight: "0.25em" }}
-        >
-          {w.word}
-        </motion.span>
-      ))}
     </div>
   );
 }
