@@ -19,11 +19,12 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  if (!mounted || !resolvedTheme) {
-    return <span className="inline-block h-8 w-8" aria-hidden="true" />;
-  }
-
-  const isLight = resolvedTheme === "light";
+  // Assume the site's defaultTheme ("dark") until the real value is known,
+  // and always render a real, clickable button — never an invisible
+  // placeholder. Worst case pre-mount is one frame with the wrong icon for
+  // a returning visitor who chose light; that's far better than the button
+  // looking entirely absent if hydration is ever slow or interrupted.
+  const isLight = mounted && resolvedTheme === "light";
 
   return (
     <button
